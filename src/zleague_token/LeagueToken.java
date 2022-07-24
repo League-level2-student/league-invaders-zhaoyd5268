@@ -1,4 +1,6 @@
-package league_token;
+package zleague_token;
+
+import league_token.TokenHacker;
 
 /*
  * Run this program to either save(encrypt) or get(decrypt) your token

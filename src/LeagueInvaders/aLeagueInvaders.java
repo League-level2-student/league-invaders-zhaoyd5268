@@ -3,25 +3,25 @@ package LeagueInvaders;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
-public class LeagueInvaders {
+public class aLeagueInvaders {
 
 	// Game variables
 	JFrame frame;
-	GamePanel gamePanel;
+	gamePanel gamePanel;
 	public static final int WIDTH = 500;
 	public static final int HEIGHT = 800;
 
 	// JFrame initialization constructor
 
-	LeagueInvaders() {
+	aLeagueInvaders() {
 		frame = new JFrame();
-		gamePanel = new GamePanel();
+		gamePanel = new gamePanel();
 	}
 
 	// Main method
 
 	public static void main(String[] args) {
-		LeagueInvaders leagueInvaders = new LeagueInvaders();
+		aLeagueInvaders leagueInvaders = new aLeagueInvaders();
 		leagueInvaders.setup();
 	}
 
@@ -31,6 +31,7 @@ public class LeagueInvaders {
 		frame.add(gamePanel);
 		Dimension d = new Dimension(WIDTH, HEIGHT);
 		frame.setSize(d);
+		frame.addKeyListener(gamePanel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
