@@ -1,6 +1,6 @@
 package LeagueInvaders;
 
-public class gameObject {
+public class GameObject {
 	
 	// gameObject variables
 	
@@ -13,7 +13,7 @@ public class gameObject {
 	
 	// Initializer method
 	
-	gameObject(int x, int y, int width, int height) {
+	GameObject(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;

@@ -3,7 +3,7 @@ package LeagueInvaders;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class rocketShip extends gameObject {
+public class rocketShip extends GameObject {
 	// Boolean member variables
 	
 	boolean up;

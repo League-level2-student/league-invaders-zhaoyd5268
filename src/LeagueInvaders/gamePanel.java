@@ -26,7 +26,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	final int GAME = 1;
 	final int END = 2;
 	int currentState = MENU;
-
+	LeagueObjectManager leagueobjectmanager = new LeagueObjectManager(rocket);
 	// Graphics paintComponent method
 
 	@Override
@@ -61,6 +61,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 
 	void updateGameState() {
 		rocket.update();
+		leagueobjectmanager.update();
 	}
 
 	void updateEndState() {
@@ -86,7 +87,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	void drawGameState(Graphics g) {
 		g.setColor(Color.GRAY);
 		g.fillRect(0, 0, aLeagueInvaders.WIDTH, aLeagueInvaders.HEIGHT);
-		rocket.draw(g);
+		leagueobjectmanager.draw(g);
 	}
 
 	void drawEndState(Graphics g) {
