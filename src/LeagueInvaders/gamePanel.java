@@ -7,14 +7,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.BufferedImage;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 public class gamePanel extends JPanel implements ActionListener, KeyListener {
 
+	// Image member variables
+
+	public static BufferedImage image;
+	public static boolean needImage = true;
+	public static boolean gotImage = false;
+
 	// GamePanel variables
 	Timer frameDraw;
+	Timer alienSpawn;
 	Font titleFont;
 	Font smallerTitleFont;
 	Font lowerTitleFont;
@@ -27,6 +36,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	final int END = 2;
 	int currentState = MENU;
 	LeagueObjectManager leagueobjectmanager = new LeagueObjectManager(rocket);
+
 	// Graphics paintComponent method
 
 	@Override
@@ -50,6 +60,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		killCountFont = new Font("Arial", Font.PLAIN, 30);
 		restartFont = new Font("Arial", Font.PLAIN, 30);
 		frameDraw = new Timer(1000 / 60, this);
+		startGame();
 		frameDraw.start();
 	}
 
@@ -62,6 +73,9 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	void updateGameState() {
 		rocket.update();
 		leagueobjectmanager.update();
+		if (needImage) {
+			loadImage("space.png");
+		}
 	}
 
 	void updateEndState() {
@@ -85,8 +99,12 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
-		g.setColor(Color.GRAY);
-		g.fillRect(0, 0, aLeagueInvaders.WIDTH, aLeagueInvaders.HEIGHT);
+		if (gotImage) {
+			g.drawImage(image, 0, 0, aLeagueInvaders.WIDTH, aLeagueInvaders.HEIGHT, null);
+		} else {
+			g.setColor(Color.BLUE);
+			g.fillRect(0, 0, aLeagueInvaders.WIDTH, aLeagueInvaders.HEIGHT);
+		}
 		leagueobjectmanager.draw(g);
 	}
 
@@ -103,7 +121,6 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		g.setColor(Color.BLACK);
 		g.drawString("Press SPACE to Restart", 70, 450);
 
-		
 	}
 
 	@Override
@@ -129,40 +146,87 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			if (currentState == END) {
+				alienSpawn.stop();
 				currentState = MENU;
 			} else {
+				if (currentState == GAME) {
+					startGame();
+				}
 				currentState++;
 			}
 		}
-		if (e.getKeyCode()==KeyEvent.VK_UP) {
-			  rocket.UP(true);
-			}
-			if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-			    rocket.DOWN(true);
-			}
-			if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-			    rocket.LEFT(true);
-			}
-			if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-			   rocket.RIGHT(true);
-			}
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			rocket.UP(true);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			rocket.DOWN(true);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			rocket.LEFT(true);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rocket.RIGHT(true);
+		}
+		
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			leagueobjectmanager.addProjectile(rocket.getProjectile());
+		}
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode()==KeyEvent.VK_UP) {
-			  rocket.UP(false);
-			}
-			if (e.getKeyCode()==KeyEvent.VK_DOWN) {
-			    rocket.DOWN(false);
-			}
-			if (e.getKeyCode()==KeyEvent.VK_LEFT) {
-			    rocket.LEFT(false);
-			}
-			if (e.getKeyCode()==KeyEvent.VK_RIGHT) {
-			   rocket.RIGHT(false);
-			}
+		if (e.getKeyCode() == KeyEvent.VK_UP) {
+			rocket.UP(false);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+			rocket.DOWN(false);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+			rocket.LEFT(false);
+		}
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+			rocket.RIGHT(false);
+		}
 
 	}
+	// Image loader method
 
+	void loadImage(String imageFile) {
+		if (needImage) {
+			try {
+				image = ImageIO.read(this.getClass().getResourceAsStream(imageFile));
+				gotImage = true;
+			} catch (Exception e) {
+
+			}
+			needImage = false;
+		}
+	}
+	
+	// Start game method
+
+	void startGame() {
+	    alienSpawn = new Timer(1000 , leagueobjectmanager);
+	    alienSpawn.start();
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

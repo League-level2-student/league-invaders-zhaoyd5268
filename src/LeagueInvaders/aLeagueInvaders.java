@@ -1,6 +1,8 @@
 package LeagueInvaders;
 
 import java.awt.Dimension;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JFrame;
 
 public class aLeagueInvaders {

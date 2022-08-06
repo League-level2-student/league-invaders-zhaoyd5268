@@ -2,10 +2,12 @@ package LeagueInvaders;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class LeagueObjectManager {
+public class LeagueObjectManager implements ActionListener {
 	// Game variables
 
 	rocketShip rocketShip;
@@ -22,7 +24,7 @@ public class LeagueObjectManager {
 	// Projectile methods
 
 	void addProjectile(Projectile projectile) {
-
+		Projectiles.add(projectile);
 	}
 
 	// Alien methods
@@ -41,16 +43,12 @@ public class LeagueObjectManager {
 			}
 
 		}
-		for (int i = 0; i < Aliens.size(); i++) {
-			Aliens.get(i).update();
-			if (Projectiles.get(i).y > aLeagueInvaders.HEIGHT) {
+		for (int i = 0; i < Projectiles.size(); i++) {
+			Projectiles.get(i).update();
+			if (Projectiles.get(i).y < aLeagueInvaders.HEIGHT) {
 				Projectiles.get(i).isActive = false;
 			}
 		}
-	}
-
-	void updateProjectile() {
-
 	}
 
 	// Draw method
@@ -78,6 +76,11 @@ public class LeagueObjectManager {
 				Projectiles.remove(i);
 			}
 		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		addAlien();
 	}
 
 
