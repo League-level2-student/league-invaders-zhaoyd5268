@@ -10,7 +10,7 @@ public class aLeagueInvaders {
 	// Game variables
 	JFrame frame;
 	gamePanel gamePanel;
-	public static final int WIDTH = 500;
+	public static final int WIDTH = 500;   
 	public static final int HEIGHT = 800;
 
 	// JFrame initialization constructor
