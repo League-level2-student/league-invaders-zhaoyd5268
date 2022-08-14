@@ -17,14 +17,13 @@ public class Projectile extends GameObject {
 
 	// Projectile constructor
 
-	Projectile(int x, int y, int width, int height, Rectangle collisionBox) {
-		super(x, y, width, height, collisionBox);
+	Projectile(int x, int y, int width, int height) {
+		super(x, y, width, height);
 		speed = 10;
 		if (needImage) {
 			loadImage("bullet.png");
 		}
 	}
-
 	// Update and Draw methods
 
 	void update() {

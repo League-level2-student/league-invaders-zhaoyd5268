@@ -12,16 +12,16 @@ public class GameObject {
 	int width;
 	int height;
 	int speed = 0;
-	Boolean isActive = false;
+	Boolean isActive = true;
 
 	// Initializer method
 
-	GameObject(int x, int y, int width, int height, Rectangle collisionBox) {
+	GameObject(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
-		this.collisionBox = collisionBox;
+		collisionBox = new Rectangle(x, y, width, height);
 	}
 
 	// Update method

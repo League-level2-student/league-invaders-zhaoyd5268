@@ -10,6 +10,7 @@ import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -22,6 +23,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	public static boolean gotImage = false;
 
 	// GamePanel variables
+	JLabel label = new JLabel();
 	Timer frameDraw;
 	Timer alienSpawn;
 	Font titleFont;
@@ -71,13 +73,19 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
+		add(label);
+		label.setText(leagueobjectmanager.getScore()+ "");
+		label.setLocation(100, 100);
 		rocket.update();
 		leagueobjectmanager.update();
 		if (needImage) {
 			loadImage("space.png");
 		}
+		if (rocket.isActive == false) {
+			currentState = END;
+		}
 	}
-
+	
 	void updateEndState() {
 
 	}
@@ -132,7 +140,6 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		} else if (currentState == END) {
 			updateEndState();
 		}
-		System.out.println("ACTION");
 		repaint();
 	}
 
@@ -169,7 +176,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-			leagueobjectmanager.addProjectile(rocket.getProjectile());
+			leagueobjectmanager.addProjectile(leagueobjectmanager.rocketShip.getProjectile());
 		}
 	}
 

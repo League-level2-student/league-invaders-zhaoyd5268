@@ -29,6 +29,7 @@ public class rocketShip extends GameObject {
 		if (needImage) {
 			loadImage("rocket.png");
 		}
+		isActive = true;
 	}
 
 	// Draw method
