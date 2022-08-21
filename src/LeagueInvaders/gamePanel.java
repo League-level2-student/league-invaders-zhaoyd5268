@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 
 import javax.imageio.ImageIO;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -32,6 +33,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	Font endGameFont;
 	Font killCountFont;
 	Font restartFont;
+	Font score;
 	rocketShip rocket = new rocketShip(250, 700, 50, 50);
 	final int MENU = 0;
 	final int GAME = 1;
@@ -73,9 +75,6 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void updateGameState() {
-		add(label);
-		label.setText(leagueobjectmanager.getScore()+ "");
-		label.setLocation(100, 100);
 		rocket.update();
 		leagueobjectmanager.update();
 		if (needImage) {
@@ -107,12 +106,16 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
+	
 		if (gotImage) {
 			g.drawImage(image, 0, 0, aLeagueInvaders.WIDTH, aLeagueInvaders.HEIGHT, null);
 		} else {
 			g.setColor(Color.BLUE);
 			g.fillRect(0, 0, aLeagueInvaders.WIDTH, aLeagueInvaders.HEIGHT);
 		}
+		g.setFont(score);
+		g.setColor(Color.WHITE);
+		g.drawString(leagueobjectmanager.getScore() + "", 70, 70 );
 		leagueobjectmanager.draw(g);
 	}
 
@@ -124,7 +127,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		g.drawString("GAME OVER", 70, 150);
 		g.setFont(killCountFont);
 		g.setColor(Color.BLACK);
-		g.drawString("You killed enemies", 100, 400);
+		g.drawString("You killed " + leagueobjectmanager.getScore() + " enemies", 100, 400);
 		g.setFont(restartFont);
 		g.setColor(Color.BLACK);
 		g.drawString("Press SPACE to Restart", 70, 450);
@@ -155,13 +158,17 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 			if (currentState == END) {
 				alienSpawn.stop();
 				currentState = MENU;
+				rocket = new rocketShip(250, 700, 50, 50);
+				leagueobjectmanager = new LeagueObjectManager(rocket);
+				rocket.isActive = true;
 			} else {
-				if (currentState == GAME) {
+				if (currentState == MENU) {
 					startGame();
 				}
 				currentState++;
 			}
 		}
+			
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			rocket.UP(true);
 		}
@@ -176,7 +183,18 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		
 		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			if (currentState == GAME) {
 			leagueobjectmanager.addProjectile(leagueobjectmanager.rocketShip.getProjectile());
+			} else if (currentState == END) {
+				rocket.isActive = true;
+				currentState = GAME;
+				alienSpawn.start();
+				startGame();
+			} else if (currentState == MENU) {
+				JOptionPane.showMessageDialog(null, "Use arrow keys to move around. Use enter to proceed through the game. use SPACE "
+						+ "to shoot the aliens. Don't get hit!!!");
+			}
+			
 		}
 	}
 
@@ -213,7 +231,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	// Start game method
 
 	void startGame() {
-	    alienSpawn = new Timer(1000 , leagueobjectmanager);
+	    alienSpawn = new Timer(2000 , leagueobjectmanager);
 	    alienSpawn.start();
 	}
 }

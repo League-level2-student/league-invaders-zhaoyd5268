@@ -65,17 +65,18 @@ public class rocketShip extends GameObject {
 	// Update method
 
 	public void update() {
+		super.update();
 		if (up == true) {
-			y -= 4;
+			y -= 2;
 		}
 		if (down == true) {
-			y += 4;
+			y += 2;
 		}
 		if (left == true) {
-			x -= 4;
+			x -= 2;
 		}
 		if (right == true) {
-			x += 4;
+			x += 2;
 		}
 
 	}

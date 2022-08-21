@@ -50,6 +50,7 @@ public class LeagueObjectManager implements ActionListener {
 				Projectiles.get(i).isActive = false;
 			}
 		}
+		rocketShip.update();
 		checkCollision();
 		purgeObjects();
 	}
@@ -88,12 +89,17 @@ public class LeagueObjectManager implements ActionListener {
 
 	public void checkCollision() {
 		for(int i = 0; i<Aliens.size(); i++) {
+			if (rocketShip.collisionBox.intersects(Aliens.get(i).collisionBox)) {
+				rocketShip.isActive = false;
+				System.out.println("hi");
+			}		
 			for(int j = 0; j<Projectiles.size(); j++) {
 				if (Projectiles.get(j).collisionBox.intersects(Aliens.get(i).collisionBox)) {
 					Aliens.get(i).isActive = false;
 					Projectiles.get(j).isActive = false;
 					score+=1;
 				}
+				
 			}
 
 		}
