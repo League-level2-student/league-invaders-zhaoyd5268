@@ -103,9 +103,19 @@ public class LeagueObjectManager implements ActionListener {
 			}
 
 		}
-		
-		
-		
+		if (rocketShip.x > 499) {
+			rocketShip.x = 2;
+		} 
+		if (rocketShip.x < 1) {
+			rocketShip.x = 498;
+		}
+		if (rocketShip.y < 1) {
+			rocketShip.y = 798;
+		}
+		if (rocketShip.y > 799) {
+			rocketShip.y = 2;
+		}
+
 	}
 
 	public int getScore() {

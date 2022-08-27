@@ -20,6 +20,7 @@ public class rocketShip extends GameObject {
 	boolean down;
 	boolean left;
 	boolean right;
+	boolean shoot;
 
 	// rocketShip constructor
 
@@ -60,6 +61,9 @@ public class rocketShip extends GameObject {
 
 	public void RIGHT(boolean right) {
 		this.right = right;
+	}
+	public void SHOOT(boolean shoot) {
+		this.shoot = shoot;
 	}
 
 	// Update method

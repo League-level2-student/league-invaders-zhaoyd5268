@@ -84,7 +84,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 			currentState = END;
 		}
 	}
-	
+
 	void updateEndState() {
 
 	}
@@ -106,7 +106,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 	}
 
 	void drawGameState(Graphics g) {
-	
+
 		if (gotImage) {
 			g.drawImage(image, 0, 0, aLeagueInvaders.WIDTH, aLeagueInvaders.HEIGHT, null);
 		} else {
@@ -115,7 +115,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		}
 		g.setFont(score);
 		g.setColor(Color.WHITE);
-		g.drawString(leagueobjectmanager.getScore() + "", 70, 70 );
+		g.drawString(leagueobjectmanager.getScore() + "", 70, 70);
 		leagueobjectmanager.draw(g);
 	}
 
@@ -168,7 +168,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 				currentState++;
 			}
 		}
-			
+
 		if (e.getKeyCode() == KeyEvent.VK_UP) {
 			rocket.UP(true);
 		}
@@ -181,20 +181,25 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			rocket.RIGHT(true);
 		}
-		
-		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
 			if (currentState == GAME) {
-			leagueobjectmanager.addProjectile(leagueobjectmanager.rocketShip.getProjectile());
+				leagueobjectmanager.addProjectile(leagueobjectmanager.rocketShip.getProjectile());
 			} else if (currentState == END) {
 				rocket.isActive = true;
+				leagueobjectmanager.rocketShip.isActive = true;
+				leagueobjectmanager.Aliens.clear();
 				currentState = GAME;
+				leagueobjectmanager.rocketShip.x = 200;
+				leagueobjectmanager.rocketShip.y = 700;
 				alienSpawn.start();
 				startGame();
 			} else if (currentState == MENU) {
-				JOptionPane.showMessageDialog(null, "Use arrow keys to move around. Use enter to proceed through the game. use SPACE "
-						+ "to shoot the aliens. Don't get hit!!!");
+				JOptionPane.showMessageDialog(null,
+						"Use arrow keys to move around. Use enter to proceed through the game. use SPACE "
+								+ "to shoot the aliens. Don't get hit!!!");
 			}
-			
+
 		}
 	}
 
@@ -212,6 +217,9 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 		if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			rocket.RIGHT(false);
 		}
+		if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+			rocket.SHOOT(true);
+		}
 
 	}
 	// Image loader method
@@ -227,31 +235,18 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 			needImage = false;
 		}
 	}
-	
+
 	// Start game method
 
 	void startGame() {
-	    alienSpawn = new Timer(2000 , leagueobjectmanager);
-	    alienSpawn.start();
+		alienSpawn = new Timer(2000, leagueobjectmanager);
+		alienSpawn.start();
+		if (currentState == END) {
+			alienSpawn.stop();
+		} else if (currentState == GAME) {
+			alienSpawn.start();
+		} else if (currentState == MENU) {
+			alienSpawn.start();
+		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
