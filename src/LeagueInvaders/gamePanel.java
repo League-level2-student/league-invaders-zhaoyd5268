@@ -245,6 +245,7 @@ public class gamePanel extends JPanel implements ActionListener, KeyListener {
 			alienSpawn.stop();
 		} else if (currentState == GAME) {
 			alienSpawn.start();
+			leagueobjectmanager.score = 0;
 		} else if (currentState == MENU) {
 			alienSpawn.start();
 		}
